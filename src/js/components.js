@@ -21,6 +21,10 @@ export function Rebus(props, ...children) {
       children,
       render({ current, rebuses, animation }) {
         const rebus = rebuses[current];
+        let rightAnswers = 0;
+        rebuses.forEach((item) =>{ 
+          rightAnswers += item.isAnswered ? 1 : 0;
+        })
         this.children = rebus.words.map((word, wordIndex) =>
           Word({ word, wordIndex, current, rebuses, charInput: props.charInput })
         );
@@ -28,6 +32,7 @@ export function Rebus(props, ...children) {
           <div class="rebus ${rebus.isAnswered ? 'rebus--answered' : ''} animation--${animation}">
             <div class="rebus__header">
               <span>${current + 1}/${rebuses.length}</span>
+              <span class="rebus__header-right"> ✔️ ${rightAnswers}</span>
             </div>
             <span class="rebus__symbols">${rebus.symbols.join(' ')}</span>
             <div class="rebus__words">
